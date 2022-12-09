@@ -11,4 +11,5 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/", methods=["GET"])
 @cross_origin()
 def hello_world():
-    return {'data':'Hello World!'}
+    data = {'data':'Hello World!'}
+    return data, 200 # data is automatically 'jsonify' and the '200' corresponds to the status code

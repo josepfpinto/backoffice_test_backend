@@ -23,5 +23,15 @@ functions:
   app:
     handler: wsgi_handler.handler
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:
+          method: ANY
+          path: /
+          integration: lambda-proxy
+          authorizer:
+            arn: ${file(./config.${opt:stage, 'dev'}.json):USER_POOL_ARN}
+      - http:
+          method: ANY
+          path: /{proxy+}
+          integration: lambda-proxy
+          authorizer:
+            arn: ${file(./config.${opt:stage, 'dev'}.json):USER_POOL_ARN}
